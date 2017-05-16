@@ -14,7 +14,13 @@
          .state('album', {
              url: '/album',
              templateUrl: '/templates/album.html'
-         });
+         })
+//        assignment
+        .state('collection', {
+            url: '/collection',
+            templateUrl: '/templates/collection.html'
+        });
+//        end of assignment
     }
     
     angular
