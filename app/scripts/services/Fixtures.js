@@ -35,7 +35,19 @@
      Fixtures.getAlbum = function() {
        return albumPicasso;
      };
-    return Fixtures;
+
+
+// assignment checkpoint 6
+     Fixtures.getCollection = function(numberOfAlbums){
+       var albums = [];
+       for (var i=0; i<numberOfAlbums; i++)
+       albums.push(albumPicasso);
+       return albums;
+     };
+
+    //  endof assignment 6
+
+     return Fixtures;
   }
 
   angular
