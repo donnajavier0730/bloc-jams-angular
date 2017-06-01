@@ -1,8 +1,9 @@
 (function() {
-  function SongPlayer() {
+  function SongPlayer(Fixtures) {
     var SongPlayer = {};
 
-    var currentSong = null;
+    var currentAlbum = Fixtures.getAlbum();
+
  /**
  * @desc Buzz object audio file
  * @type {Object}
@@ -18,17 +19,22 @@
      var setSong = function(song) {
        if (currentBuzzObject) {
            currentBuzzObject.stop();
-           currentSong.playing = null;
+           SongPlayer.currentSong.playing = null;
        }
-       
+
        currentBuzzObject = new buzz.sound(song.audioUrl, {
            formats: ['mp3'],
            preload: true
        });
 
-       currentSong = song;
+       SongPlayer.currentSong = song;
      };
 
+     var getSongIndex = function(song) {
+       return currentAlbum.songs.indexOf(song);
+     };
+
+     SongPlayer.currentSong = null;
 /**
 * @function play
 * @desc plays a  song and loads new audio file as currentBuzzObject
@@ -37,38 +43,63 @@
 */
 
     SongPlayer.play = function(song) {
-      if (currentSong !== song) {
+      song = song || SongPlayer.currentSong;
+      if (SongPlayer.currentSong !== song) {
          setSong(song);
          currentBuzzObject.play();
          song.playing = true;
-       } else if (currentSong === song) {
+       } else if (SongPlayer.currentSong === song) {
            if (currentBuzzObject.isPaused()) {
                currentBuzzObject.play();
            }
        }
      };
 
-/**
-* @function pause
-* @desc pause a song
-* @param {Object} song
-*/
+
+    /**
+    * @function pause
+    * @desc pause current song
+    * @param {Object} song
+    */
      SongPlayer.pause = function(song) {
+       song = song || SongPlayer.currentSong;
        currentBuzzObject.pause();
        song.playing = false;
      };
 
-// Assignment checkpoint 7
-     SongPlayer.playsong = function(song) {
-       currentBuzzObject.play();
-       song.playing = true;
-     };
-// end Assignment
 
+
+     /**
+     * @function previous
+     * @desc go to previous song
+     *
+     */
+
+     SongPlayer.previous = function() {
+        var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+        currentSongIndex--;
+
+        if (currentSongIndex < 0) {
+          currentBuzzObject.stop();
+          SongPlayer.currentSong.playing = null;
+        } else {
+           var song = currentAlbum.songs[currentSongIndex];
+           setSong(song);
+           currentBuzzObject.play();
+          //  playSong(song);
+        }
+     };
+
+     // Assignment checkpoint 7
+          SongPlayer.playsong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+          };
+     // end Assignment
     return SongPlayer;
   }
 
   angular
     .module('blocJams')
-    .factory('SongPlayer', SongPlayer);
+    .factory('SongPlayer', ['Fixtures', SongPlayer]);
 })();
