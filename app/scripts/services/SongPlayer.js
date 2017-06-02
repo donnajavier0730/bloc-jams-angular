@@ -100,13 +100,15 @@
        var stopSong = function () {
          currentBuzzObject.stop();
          song.playing = null;
+        // SongPlayer.currentSong.playing = null;
        };
        var currentSongIndex = getSongIndex(SongPlayer.currentSong);
        currentSongIndex++;
 
        if (currentSongIndex < 0) {
-         currentBuzzObject.stop();
-         SongPlayer.currentSong.playing = null;
+        //  currentBuzzObject.stop();
+        //  SongPlayer.currentSong.playing = null;
+        stopSong();
        } else {
           var song = currentAlbum.songs[currentSongIndex];
           setSong(song);
