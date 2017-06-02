@@ -34,6 +34,11 @@
        return currentAlbum.songs.indexOf(song);
      };
 
+     /**
+     * @desc Active song object from list of songs
+     * @type {Object}
+     */
+
      SongPlayer.currentSong = null;
 /**
 * @function play
@@ -88,6 +93,26 @@
            currentBuzzObject.play();
           //  playSong(song);
         }
+     };
+
+// assignment -8
+     SongPlayer.next = function() {
+       var stopSong = function () {
+         currentBuzzObject.stop();
+         song.playing = null;
+       };
+       var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+       currentSongIndex++;
+
+       if (currentSongIndex < 0) {
+         currentBuzzObject.stop();
+         SongPlayer.currentSong.playing = null;
+       } else {
+          var song = currentAlbum.songs[currentSongIndex];
+          setSong(song);
+          currentBuzzObject.play();
+         //  playSong(song);
+       }
      };
 
      // Assignment checkpoint 7
