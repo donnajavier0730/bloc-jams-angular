@@ -146,6 +146,17 @@
             song.playing = true;
           };
      // end Assignment
+
+     // Assignment checkpoint 10
+
+    //  SongPlayer.volume = null;
+    //
+    //  SongPlayer.setVolume = function(volume) {
+    //    if (currentSoundFile) {
+    //     currentSoundFile.setVolume(volume);
+    // };
+
+     //end
     return SongPlayer;
   }
 
